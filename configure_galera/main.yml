@@ -1,0 +1,10 @@
+---
+- name: create and configure a galera cluster
+  hosts: bdd
+  
+  roles:
+    - os_prepare.yml
+    - mysql_setup.yml
+
+  tasks:
+    

@@ -1,0 +1,31 @@
+---
+- name: remove and uninstall mysql
+  hosts: nextcloud1, nextcloud2
+  vars:
+    packages:
+      - mysql-server
+      - mariadb-server
+  tasks:
+    - name: uninstall mysql package
+      apt:
+        name: "{{ item }}"
+        state: absent
+      loop: "{{ packages }}"
+
+    - name: remove mysql directory
+      file: 
+        state: absent
+        path: "/var/lib/mysql"
+    
+    - name: remove mysql directory
+      file: 
+        state: absent
+        path: "/etc/mysql"
+
+    - name: remove cnf file
+      file:
+        state: absent
+        path: "/root/.my.cnf"
+
+    - name: reboot system
+      reboot:
