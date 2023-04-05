@@ -1,0 +1,25 @@
+---
+- name: Preparation of a new linux server (Update packages, security, ...)
+  hosts: 'localhost'
+  vars_prompt:
+
+    - name: hostname
+      prompt: What name do you want to give to this server ?
+      private: false
+
+  tasks:
+    - name: "print hostname server"
+      ansible.builtin.debug:
+        msg: 'Server hostname is {{hostname}}!'
+
+    - name: "Rename Hostname server"
+      ansible.builtin.hostname:
+        name: '{{hostname}}'
+      become: 'true'
+
+    - name: "Install Docker packages and its dependencies"
+      apt:
+        name: "docker"
+        state: latest
+
+    

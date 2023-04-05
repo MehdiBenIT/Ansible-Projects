@@ -1,0 +1,17 @@
+---
+- name: Install and configure a Wordpress website
+  hosts: '*'
+  
+  roles:
+    - ../roles/updates
+    - ../roles/php
+    - ../roles/mysql
+    - ../roles/apache
+
+  post_tasks:
+    - name : Wordpress website installed and configured
+      debug:
+        msg: 
+          - "The wordpress website is launched!"
+
+          
