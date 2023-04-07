@@ -1,4 +1,19 @@
 ---
 # tasks file for ssh
-- name: modify ssh config file
-  
+- name: Accept only passkey authentication
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#PasswordAuthentication'
+    line: 'PasswordAuthentication yes'
+
+- name: modify SSH port  
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#Port'
+    line: 'Port 2298'
+
+- name: allow SSH access only via VPN connection
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#ListenAddress'
+    line: 'ListenAddress 45.155.171.225'
