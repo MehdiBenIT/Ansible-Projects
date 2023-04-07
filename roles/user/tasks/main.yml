@@ -1,0 +1,6 @@
+---
+- name: Create new user
+  ansible.builtin.user:
+    name: coready
+    shell: /bin/bash
+    append: yes
