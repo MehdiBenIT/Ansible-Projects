@@ -1,6 +1,10 @@
 ---
 - name: Create new user
   ansible.builtin.user:
-    name: coready
+    name: nimda
+    state: present
     shell: /bin/bash
-    append: yes
+    groups: sudo
+    password: "{{passwd | passwd_hash('sha512', 'salt') }}"
+    create_home: yes
+  notify: Update SSH passkey

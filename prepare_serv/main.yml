@@ -1,6 +1,10 @@
 ---
 - name: Preparation of a new linux server (Update packages, security, ...)
-  hosts: 'localhost'
+  hosts: Linux
+  vars:
+    - oldhostname: "{{ ansible_facts['ansible_nodename'] }}"
+  vars_files:
+    - passwd.yml
   vars_prompt:
 
     - name: hostname
@@ -8,20 +12,23 @@
       private: false
 
   tasks:
-    - name: "print hostname server"
+    - name: "Display hostname server"
       ansible.builtin.debug:
         msg: 'Server hostname is {{hostname}}!'
 
     - name: "Rename Hostname server"
-      ansible.builtin.hostname:
-        name: '{{hostname}}'
-      become: 'true'
-
-    - name: "Install Docker packages and its dependencies"
-      apt:
-        name: "docker"
-        state: latest
+      ansible.builtin.lineinfile:
+        path: /etc/hostname
+        regexp: 'oldhostname'
+        line: "{{hostname}}"
+    
+    - name: "Reboot the server..."
+      ansible.builtin.reboot:
 
     - name: "Import SSH role"
       import_role:
         name: 'ssh'
+
+    - name: "Import User role"
+      import_role:
+        name: 'user'

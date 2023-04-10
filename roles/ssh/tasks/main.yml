@@ -12,8 +12,15 @@
     regexp: '^#Port'
     line: 'Port 2298'
 
-- name: allow SSH access only via VPN connection
+- name: Deny root login
   ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
-    regexp: '^#ListenAddress'
-    line: 'ListenAddress 45.155.171.225'
+    regexp: '^#PermitRootLogin'
+    line: 'PermitRootLogin no'
+
+- name: Allow specific user
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    line: AllowUsers nimda
+    insertafter: EOF
+  notify: Restart SSH
