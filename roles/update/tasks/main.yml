@@ -1,12 +1,14 @@
 ---
 - name: Update package repositories
   apt:
-    update_cache: true
+    update_cache: yes
+    force_apt_get: yes
     cache_valid_time: 3600
 
 - name: "Upgrade all packages"
   apt:
     upgrade: dist
+    force_apt_get: yes
 
 - name: "install specific packages"
   apt:

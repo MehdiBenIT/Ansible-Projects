@@ -1,0 +1,11 @@
+---
+
+dir_wordpress: "/var/www/wordpress"
+
+conf: "wordpress.conf"
+
+mysql_user: "wordpress_user"
+db_name: "wordpress"
+db_type: "mysql"
+
+ip: "{{ ansible_facts['default_ipv4']['address'] }}"

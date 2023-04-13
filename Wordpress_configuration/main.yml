@@ -1,9 +1,19 @@
 ---
 - name: Install and configure a Wordpress website
-  hosts: 'localhost' 
-  
-  roles:
-    - 'update'
+  hosts: 'Webserver' 
+
+  tasks:
+    - name: "Update packages"
+      import_role:
+        name: 'update'
+     
+    - name: "Install and configure Lamp"
+      import_role:
+        name: 'lamp_setup'
+
+    - name: "Installation and configuration of wordpress"
+      import_role:
+        name: 'wp'
 
   post_tasks:
     - name : "Wordpress website installed and configured"
