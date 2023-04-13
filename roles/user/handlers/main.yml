@@ -1,5 +1,5 @@
 ---
-- name: Update SSH authorized keys
+- name: Update SSH passkey
   ansible.builtin.authorized_key:
     user: new_user
     state: present
