@@ -1,2 +1,10 @@
 ---
-# handlers file for wp
+- name: Restart apache
+  service:
+    name: apache2
+    state: restarted
+
+- name: Restart mysql
+  service:
+    name: mysqld
+    state: restarted

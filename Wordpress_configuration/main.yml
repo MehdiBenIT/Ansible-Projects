@@ -1,6 +1,10 @@
 ---
 - name: Install and configure a Wordpress website
-  hosts: 'Webserver' 
+  hosts: 'Webserver'
+  vars_files:
+    - secret.yml
+  vars:
+    - url_wp: "mblogb.mehdibennouar.com"
 
   tasks:
     - name: "Update packages"
