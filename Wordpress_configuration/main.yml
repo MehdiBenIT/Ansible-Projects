@@ -5,6 +5,8 @@
     - secret.yml
   vars:
     - url_wp: "mblogb.mehdibennouar.com"
+    - title_wp: "DevOps Jr Journey"
+    - mail: "mehdibennouar@protonmail.com"
 
   tasks:
     - name: "Update packages"
@@ -15,9 +17,18 @@
       import_role:
         name: 'lamp_setup'
 
+    - name: "Creation of a basic user"
+      user:
+        name: wpadd
+        comment: User for wp
+        state: present
+
     - name: "Installation and configuration of wordpress"
       import_role:
         name: 'wp'
+
+
+    
 
   post_tasks:
     - name : "Wordpress website installed and configured"

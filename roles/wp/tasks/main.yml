@@ -71,3 +71,35 @@
   service:
     name: apache2
     state: restarted
+
+- name: download WP-cli tool
+  get_url:
+    url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    dest: "/tmp/wp-cli.phar"
+
+- name: Get php wp cli info
+  shell: php "/tmp/wp-cli.phar" --info
+  register: wpcli_info
+
+- name: debug wp cli info
+  debug:
+    var: wpcli_info
+    verbosity: 2
+
+- name: change directory's permissions
+  file:
+    dest: "/tmp/wp-cli.phar"
+    mode: a+x
+
+- name: move to local bin
+  copy:
+    src: "/tmp/wp-cli.phar"
+    dest: /usr/local/bin/wp
+
+- name: create wp config file via cli
+  shell:
+    wp config create --path="{{ dir_wordpress }}" --db_name="{{ db_name }}" --dbuser="{{ mysql_root_passwd }}"
+
+- name: Configure wp via cli
+  shell:
+    wp core install --url="{{ url_wp }}" --title="{{ title_wp }}" --admin_user="{{ wp_admin }}" --admin_password="{{ wp_password }}" --admin-email="{{ mail }}" --path="{{ dir_wordpress }}"
