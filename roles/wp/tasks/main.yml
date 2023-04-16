@@ -92,14 +92,12 @@
     mode: a+x
 
 - name: move to local bin
-  copy:
-    src: "/tmp/wp-cli.phar"
-    dest: /usr/local/bin/wp
+  shell: sudo mv /tmp/wp-cli.phar /usr/local/bin/wp
 
 - name: create wp config file via cli
-  shell:
-    wp config create --path="{{ dir_wordpress }}" --db_name="{{ db_name }}" --dbuser="{{ mysql_root_passwd }}"
+  shell: wp config create --path="{{ dir_wordpress }}" --dbname="{{ db_name }}" --dbuser="{{ mysql_user }}" --dbpass="{{ mysql_wp_passwd }}" --allow-root
 
 - name: Configure wp via cli
-  shell:
-    wp core install --url="{{ url_wp }}" --title="{{ title_wp }}" --admin_user="{{ wp_admin }}" --admin_password="{{ wp_password }}" --admin-email="{{ mail }}" --path="{{ dir_wordpress }}"
+  become: true
+  become_user: wpadd
+  shell: wp core install --url="{{ url_wp }}" --title="{{ title_wp }}" --admin_user="{{ wp_admin }}" --admin_password="{{ wp_passwd }}" --admin_email="{{ mail }}" --path="{{ dir_wordpress }}"
