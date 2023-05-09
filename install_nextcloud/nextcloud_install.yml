@@ -1,6 +1,6 @@
 ---
 - name: Install and configure nextcloud server
-  hosts: nextcloud1
+  hosts: nextcloud4
   vars_files:
     - secret.yml
   vars:
