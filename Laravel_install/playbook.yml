@@ -3,6 +3,10 @@
   hosts: localhost
   vars_files:
     - vars.yml
+  vars_prompt:
+    - name: project_name
+      prompt: What is the name of your Laravel's project?
+      private: false
   roles:
     - ../roles/update
     
@@ -25,6 +29,24 @@
         cmd: php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
         creates: /usr/local/bin/composer
 
+    - name: Pause to confirm project name to create
+      pause:
+        prompt: "The Laravel project you're going to create is named {{ project_name }}. Do you want to proceed ? (yes/no)"
+      register: project_confirm
+
+    - name: debug project_confirm var
+      ansible.builtin.debug:
+        msg: "content of project_confirm var: {{ project_confirm }}"
+
+    - name: set a variable based on the pause response
+      set_fact:
+        continue_install: "{{ 'yes' in project_confirm.user_input | lower }}"
+
+    - name: stop execution if user did not confirm
+      fail:
+        msg: "You did not confirm, existing..."
+      when: not confirm_install
+
     - name: Display information about the installation
       ansible.builtin.debug:
         msg:
@@ -33,6 +55,7 @@
         - "To start a Laravel Development server :"
         - "cd project_name"
         - "php artisan serve"
+      when: continue_install
 
       
 
