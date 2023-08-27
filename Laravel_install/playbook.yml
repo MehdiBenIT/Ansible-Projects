@@ -1,7 +1,7 @@
 ---
 - name: Install Laravel
   hosts: localhost
-  vars:
+  vars_files:
     - vars.yml
   roles:
     - ../roles/update
@@ -11,8 +11,8 @@
     - name: install required PHP packages
       apt:
         name: "{{ item }}"
-        state: lates
-      loop: "{{ php_pkt }}"
+        state: latest
+      loop: "{{ php_pkts }}"
 
     - name: Download composer
       get_url: 
