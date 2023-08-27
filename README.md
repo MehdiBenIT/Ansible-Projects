@@ -1,4 +1,4 @@
-## Projects List
+### Projects List
 
 Here is a detailed list of the Ansible projects that users will find in this repository:
 
