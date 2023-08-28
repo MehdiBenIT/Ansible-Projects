@@ -15,12 +15,27 @@
     - ../roles/update
     
   tasks:
-    - name: install required PHP packages
+    - name: Install required PHP packages (apt)
       apt:
         name: "{{ item }}"
         state: latest
       loop: "{{ php_pkts }}"
+      when: ansible_pkg_mgr == "apt"
 
+    - name: Install required PHP packages (yum)
+      yum:
+        name: "{{ item }}"
+        state: latest
+      loop: "{{ php_pkts }}"
+      when: ansible_pkg_mgr == "yum"
+
+    - name: Install required PHP packages (dnf)
+      dnf:
+        name: {{ item }}"
+        state: latest
+      loop: "{{ php_pkts }}"
+      when: ansible_pkg_mgr == "dnf"
+      
     - name: Download composer
       get_url: 
         url: https://getcomposer.org/installer
@@ -41,9 +56,14 @@
       ansible.builtin.debug:
         msg: "content of project_confirm var: {{ project_confirm }}"
 
+    - name: Modify case of project_confirm var
+      set_fact:
+        project_confirm: "{{ project_confirm | lower }}"
+
     - name: set a variable based on the pause response
       set_fact:
         confirm_install: "{{ 'yes' in project_confirm.user_input | lower }}"
+      when: project_confirm == "yes"
 
     - name: stop execution if user did not confirm
       fail:
