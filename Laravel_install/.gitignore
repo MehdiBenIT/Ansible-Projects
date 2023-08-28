@@ -1,3 +1,5 @@
 ansible.cfg
 inventory
 requirements.yml
+.\project\*
+./project/

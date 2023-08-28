@@ -7,6 +7,9 @@
     - name: project_name
       prompt: What is the name of your Laravel's project?
       private: false
+    - name: work_env
+      prompt: Is it for dev or prod environment? (dev/prod)
+      private: false
   roles:
     - ../roles/update
     
@@ -40,22 +43,42 @@
 
     - name: set a variable based on the pause response
       set_fact:
-        continue_install: "{{ 'yes' in project_confirm.user_input | lower }}"
+        confirm_install: "{{ 'yes' in project_confirm.user_input | lower }}"
 
     - name: stop execution if user did not confirm
       fail:
         msg: "You did not confirm, existing..."
       when: not confirm_install
+    
+    - name: Install Laravel Installer
+      command:
+        cmd: composer global require laravel/installer
+        creates: /root/.composer/vendor/laravel/installer
+    
+    - name: Export Composer's bin directory to system PATH
+      lineinfile:
+        path: /etc/environment
+        line: 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/root/.composer/vendor/bin"'
+
+    - name: Create a new Laravel project
+      command: composer create-project --prefer-dist laravel/laravel /var/www/{{project_name}}
+      args:
+        creates: /var/www/{{project_name}}
+      when: confirm_install and work_env == "dev"
+      register: install_ok
+
+    - name: debug variable
+      debug:
+        msg: "{{ install_ok }}"
 
     - name: Display information about the installation
       ansible.builtin.debug:
         msg:
-        - "Laravel can be use by using the following command :"
-        - "composer create-project --prefer-dist laravel/laravel project_name"
-        - "To start a Laravel Development server :"
-        - "cd project_name"
+        - "The project {{project_name}} has been successfully install! "
+        - "To start the Laravel Development server of the project, you have to execute the following commands :"
+        - "cd /var/www/{{project_name}}"
         - "php artisan serve"
-      when: continue_install
+      when: install_ok
 
       
 
