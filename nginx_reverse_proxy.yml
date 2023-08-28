@@ -17,3 +17,21 @@
         path: /etc/nginx/site-enabled/default
         state: absent
       
+    - name: Copy Nginx configuration template
+      template:
+        src: nginx_reverse_proxy.conf.j2
+        dest: /etc/nginx/site_available/reverse_proxy
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Enable Nginx reverse proxy site
+      file:
+        src: /etc/nginx/sites-available/reverse_proxy
+        dest: /etc/nginx/sites_enables/reverse_proxy
+        state: link
+
+    - name: Reload Nginx to apply changes
+      service:
+        name: nginx
+        state: reloaded
