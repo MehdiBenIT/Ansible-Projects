@@ -80,24 +80,11 @@
     --database-pass "{{ mysql_nextcloud_passwd }}"
     --admin-user "{{ nc_admin }}"
     --admin-pass "{{ nc_passwd }}"
-    --admin-email "mehdi@mehdibennouar.com"
+    --admin-email "{{ mail_addr }}"
   args:
       creates: /var/www/nextcloud/config/config.php
   register: setup_nc
   notify: Restart apache
-
-    #- name: nextcloud install finish
-    #  shell: >
-    #sudo -u www-data 
-    #php /var/www/nextcloud/occ maintenance:install
-    #--data-dir "{{ dir_nextcloud }}"
-    #--database "{{ db_type }}"
-    #--database-name "{{ db_name }}"
-    #--database-user "{{ mysql_user }}"
-    #--database-user "{{ mysql_nextcloud_passwd }}"
-    #--admin-user "{{ nc_admin }}"
-    #--admin-pass "tnyvch"
-    #notify: Restart apache
 
 - name: display variable
   debug:
