@@ -1,0 +1,5 @@
+---
+- name: Installation of a Nginx Reverse Proxy
+  hosts: all
+
+  tasks:
