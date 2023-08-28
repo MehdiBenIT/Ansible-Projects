@@ -1,2 +1,12 @@
 ---
-# defaults file for nginx
+websites:
+  - name: site1
+    nginx_port: 80
+    ssl_enabled: true
+    ssl_certificate: /etc/nginx/ssl/site1.crt
+    ssl_certificate_key: /etc/nginx/ssl/site1.
+    locations:
+      - path: /app1
+        proxy_pass_url: http://backend_for_app1
+      - path: /app2
+        proxy_pass_url: http://backend_for_app2
