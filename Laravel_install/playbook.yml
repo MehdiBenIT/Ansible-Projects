@@ -61,12 +61,14 @@
 
     - name: install LAMP stack for Prod environment
       ansible.builtin.include_role:
-        name: ../roles/lamp
+        name: ../roles/lamp_setup
       vars:
         project_name: "{{project_name}}"
         path_app: "/var/www/{{project_name}}"
         server_name: "{{ansible_fqdn}}"
         server_admin: "root"
+      vars_file:
+      
       when: confirm_install and work_env == "prod"
 
     - name: Create a new Laravel project

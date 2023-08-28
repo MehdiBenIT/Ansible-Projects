@@ -3,3 +3,4 @@ inventory
 requirements.yml
 .\project\*
 ./project/
+credentials.yml
