@@ -7,7 +7,7 @@
     # DocumentRoot: The directory out of which you will serve your documents.
     DocumentRoot {{path_app}}/public
 
-    <Directory /var/www/your_project/public>
+    <Directory {{path_app}}/public>
         Options Indexes FollowSymLinks
         AllowOverride All
         Require all granted

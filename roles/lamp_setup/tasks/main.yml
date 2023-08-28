@@ -57,7 +57,7 @@
 - name: Add an apache configuration file
   template:
     src: apache.conf.j2
-    dest: /etc/nginx/sites-available/{{project_name}}.conf
+    dest: /etc/nginx/sites-available/{{app_name}}.conf
     owner: root
     group: root
     mode: '0644'

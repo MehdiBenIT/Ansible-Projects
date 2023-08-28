@@ -3,6 +3,7 @@
   hosts: localhost
   vars_files:
     - vars.yml
+    - credentials.yml
   vars_prompt:
     - name: project_name
       prompt: What is the name of your Laravel's project?
@@ -63,12 +64,11 @@
       ansible.builtin.include_role:
         name: ../roles/lamp_setup
       vars:
-        project_name: "{{project_name}}"
-        path_app: "/var/www/{{project_name}}"
-        server_name: "{{ansible_fqdn}}"
+        app_name: "{{ project_name }}"
+        path_app: "/var/www/{{ project_name }}"
+        server_name: "{{ ansible_fqdn }}"
         server_admin: "root"
-      vars_file:
-      
+        mysql_root_passwd: "{{ mysql_passwd }}"
       when: confirm_install and work_env == "prod"
 
     - name: Create a new Laravel project
