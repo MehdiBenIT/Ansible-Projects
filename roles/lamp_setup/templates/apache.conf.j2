@@ -1,11 +1,11 @@
 <VirtualHost *:80>
     # The ServerName directive sets the request scheme, hostname, and port that
     # the server uses to identify itself.
-    ServerName your-domain.com
-    ServerAdmin webmaster@your-domain.com
+    ServerName {{server_name}}
+    ServerAdmin {{server_admin}}@{{server_name}}.com
 
     # DocumentRoot: The directory out of which you will serve your documents.
-    DocumentRoot /var/www/your_project/public
+    DocumentRoot {{path_app}}/public
 
     <Directory /var/www/your_project/public>
         Options Indexes FollowSymLinks
