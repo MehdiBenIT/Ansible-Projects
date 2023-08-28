@@ -1,38 +1,72 @@
-Role Name
-=========
+# Ansible Role for Secure Nextcloud Installation
 
-A brief description of the role goes here.
+## Overview
 
-Requirements
-------------
+This Ansible role automates the installation and configuration of Nextcloud, including necessary security configurations such as permissions and database setup.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Requirements
 
-Role Variables
---------------
+- A server running Ubuntu 20.04 LTS or any compatible distribution.
+- SSH access to the target server.
+- Ansible 2.9+ installed on your local machine or control node.
+- Python and required Python libraries installed on the target host.
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+## Role Variables
 
-Dependencies
-------------
+Here are the variables that can be configured:
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+- `dir_nextcloud`: Directory where Nextcloud will be installed.
+- `db_name`: Name of the MySQL database for Nextcloud.
+- `mysql_root_passwd`: Root password for MySQL.
+- `mysql_user`: MySQL username for Nextcloud.
+- `mysql_nextcloud_passwd`: Password for the Nextcloud MySQL user.
+- `nc_admin`: Admin username for Nextcloud.
+- `nc_passwd`: Admin password for Nextcloud.
+- `db_type`: Database type (default is 'mysql').
+- `mail_addr`: Admin email address.
+- `nc_config`: Nextcloud configuration options as key-value pairs.
 
-Example Playbook
-----------------
+## Dependencies
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+No external roles are required for this role.
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+## Example Playbook
 
-License
--------
+Here's an example playbook on how to use this role:
 
-BSD
+```yaml
+- hosts: nextcloud_server
+  vars:
+    dir_nextcloud: "/var/www/nextcloud"
+    db_name: "nextcloud_db"
+    mysql_root_passwd: "strong_root_password"
+    mysql_user: "nextcloud_user"
+    mysql_nextcloud_passwd: "strong_user_password"
+    nc_admin: "admin"
+    nc_passwd: "strong_admin_password"
+    db_type: "mysql"
+    mail_addr: "admin@example.com"
+    nc_config:
+      - { key: 'trusted_domains', value: 'your_domain.com' }
+  roles:
+    - secure_nextcloud_installation
+```
 
-Author Information
-------------------
+## Handlers
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Make sure to include handlers for restarting Apache and MySQL if you use `notify` in the role tasks:
+
+- `Restart apache`
+- `Restart mysql`
+
+## Security
+
+For production environments, it is advised to secure sensitive variables like passwords using Ansible Vault.
+
+## License
+
+MIT
+
+## Author Information
+
+This role was created in 2023 by [Mehdi B.]
