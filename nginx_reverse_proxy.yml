@@ -3,6 +3,15 @@
   hosts: all
   vars_files:
     - vars_nginx_rp.yml
+  vars:
+    websites:
+      - name: site1
+        nginx_port: 80
+        locations:
+          - path: /app1
+            proxy_pass_url: http://backend_for_app1
+          - path: /app2
+            proxy_pass_url: http://backend_for_app2
   roles:
     - configure_galera/os_prepare
     
