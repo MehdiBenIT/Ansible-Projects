@@ -28,3 +28,31 @@
         name: "{{ item }}"
         state: latest
       loop: "{{ db_pkgs }}"
+
+    - name: Stop MariaDB service
+      systemd:
+        name: mariadb
+        state: stopped
+
+    - name: Remove existing Mariadb
+      file:
+        path: "/etc/mysql/mariadb-conf.d/50-server.cnf"
+        state: absent
+
+    - name: Add new MariaDB configuration
+      template:
+        src: "50-server.cnf.j2"
+        dest: "/etc/mysql/mariadb-conf.d/50-server.cnf"
+      notify:
+        - restart Mariadb
+
+    - name: Bootstrap the Galera cluster on the first node
+      shell: "galera_new_cluster"
+      when: "'first_galera_node' in group_names"
+
+handlers:
+  - name: restart Mariadb
+    systemd:
+      name: mariadb
+      state: restarted
+    
