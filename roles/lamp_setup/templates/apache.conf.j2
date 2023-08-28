@@ -1,0 +1,30 @@
+<VirtualHost *:80>
+    # The ServerName directive sets the request scheme, hostname, and port that
+    # the server uses to identify itself.
+    ServerName your-domain.com
+    ServerAdmin webmaster@your-domain.com
+
+    # DocumentRoot: The directory out of which you will serve your documents.
+    DocumentRoot /var/www/your_project/public
+
+    <Directory /var/www/your_project/public>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    # ErrorLog: The location of the error log file.
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+
+    # LogLevel: Control the number of messages logged to the error_log.
+    LogLevel warn
+
+    # CustomLog: The location of the access log file.
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    # For PHP 7.x:
+    <FilesMatch \.php$>
+        SetHandler "proxy:unix:/var/run/php/php7.x-fpm.sock|fcgi://localhost/"
+    </FilesMatch>
+
+</VirtualHost>

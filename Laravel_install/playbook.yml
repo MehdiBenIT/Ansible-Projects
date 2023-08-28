@@ -13,7 +13,6 @@
   roles:
     - ../roles/update
     
-  
   tasks:
     - name: install required PHP packages
       apt:
@@ -59,6 +58,14 @@
       lineinfile:
         path: /etc/environment
         line: 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/root/.composer/vendor/bin"'
+
+    - name: install LAMP stack for Prod environment
+      ansible.builtin.include_role:
+        name: ../roles/lamp
+      vars:
+        project_name: "{{project_name}}"
+        path_app: "/var/www/{{project_name}}"
+      when: confirm_install and work_env == "prod"
 
     - name: Create a new Laravel project
       command: composer create-project --prefer-dist laravel/laravel /var/www/{{project_name}}
