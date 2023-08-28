@@ -2,31 +2,21 @@
 - name: Install Nginx package
   apt:
     name: nginx
-    state: pfdxdng
+    state: present
 
-  - name: Remove default Nginx site
-    file:
-      path: /etc/nginx/site-enabled/default
-      state: absent
+- name: Remove default Nginx site
+  file:
+    path: /etc/nginx/site-enabled/default
+    state: absent
 
-  - name: Setup Nginx reverse proxy sites
-    loop: "{ websites }"
-      block:
-        - name: Copy Nginx configuration template
-          template:
-            src: nginx_reverse_proxy.conf.j2
-            dest: "/etc/nginx/site_available/{{ item.name }}"
-            owner: root
-            group: root
-            mode: '0644'
+- name: Setup Nginx reverse proxy sites
+  include_tasks: sites.yml
+  loop: "{{ websites }}"
+  loop_control:
+    loop_var: item
+      
 
-        - name: Enable Nginx reverse proxy site
-          file:
-            src: "/etc/nginx/sites-available/{{ item.name }}"
-            dest: "/etc/nginx/sites-enabled/{{ item.name }}"
-            state: link
-
-  - name: Reload Nginx to apply all changes
-    service:
-      name: nginx
-      state: reloaded
+- name: Reload Nginx to apply all changes
+  service:
+    name: nginx
+    state: reloaded

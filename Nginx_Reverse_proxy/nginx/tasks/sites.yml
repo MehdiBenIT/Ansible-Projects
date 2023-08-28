@@ -1,0 +1,14 @@
+---
+- name: Copy Nginx configuration template
+  template:
+    src: nginx_reverse_proxy.conf.j2
+    dest: "/etc/nginx/sites-available/{{ item.name }}"
+    owner: root
+    group: root
+    mode: '0644'
+  
+- name: Enable Nginx reverse proxy site
+  file:
+    src: "/etc/nginx/sites-available/{{ item.name }}"
+    dest: "/etc/nginx/sites-enabled/{{ item.name }}"
+    state: link

@@ -1,8 +1,6 @@
 ---
 - name: Installation of a Nginx Reverse Proxy
-  hosts: all
-  vars_files:
-    - vars_nginx_rp.yml
+  hosts: localhost
   roles:
-    - configure_galera/os_prepare
+    - os_prepare
     - nginx
