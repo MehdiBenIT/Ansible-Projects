@@ -1,6 +1,6 @@
 ---
 - name: create and configure a galera cluster
-  hosts: galera_bdd_nodes
+  hosts: galera_db_nodes
   become: yes
   vars_files:
     - vars/credentials.yml  
@@ -8,4 +8,22 @@
     - os_prepare.yml
 
   tasks:
-      
+    - name: Add MariaDB repository
+      apt_repository:
+        repo: "deb [arch=amd64] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.4/ubuntu {{ ansible_distribution_release }} main"
+        state: present
+
+    - name: Import MariaDB public key
+      apy_key:
+        url: "https://mariadb.org/mariadb_release_signing_key.asc"
+        state: present
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install MariaDB and Cluster packages
+      apt:
+        name: "{{ item }}"
+        state: latest
+      loop: "{{ db_pkgs }}"
