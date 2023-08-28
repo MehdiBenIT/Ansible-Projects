@@ -65,6 +65,8 @@
       vars:
         project_name: "{{project_name}}"
         path_app: "/var/www/{{project_name}}"
+        server_name: "{{ansible_fqdn}}"
+        server_admin: "root"
       when: confirm_install and work_env == "prod"
 
     - name: Create a new Laravel project
