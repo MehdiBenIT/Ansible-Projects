@@ -3,5 +3,17 @@
   hosts: all
   vars_files:
     - vars_nginx_rp.yml
-
+  roles:
+    - configure_galera/os_prepare
+    
   tasks:
+    - name: Install Nginx package
+      apt:
+        name: nginx
+        state: pfdxdng
+
+    - name: Remove default Nginx site
+      file:
+        path: /etc/nginx/site-enabled/default
+        state: absent
+      
