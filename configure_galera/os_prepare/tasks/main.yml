@@ -1,11 +1,13 @@
 ---
 
-- name: update system
+- name: update apt cache and upgrade packages
   apt:
     update_cache: yes
-    upgrade: full
+    upgrade: safe
 
 - name: install specific packages
   apt:
     name: "{{ packages }}"
     state: latest
+
+- name: 
