@@ -1,20 +1,4 @@
 ---
 
-packages:
-  - sudo
-  - htop
-  - net-tools
-  - wget
-  - unzip
-  - python3-pymysql
-  - curl
-  - vim
-  - htop
-  - git
-  - ufw
-  - fail2ban
-  - rsync
-  - build-essential
-  - python3
-  - python3-pip
-
+pkgs:
+  - software-properties-common
