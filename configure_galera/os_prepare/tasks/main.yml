@@ -5,9 +5,7 @@
     update_cache: yes
     upgrade: safe
 
-- name: install specific packages
+- name: install common necessary packages
   apt:
     name: "{{ packages }}"
     state: latest
-
-- name: 
