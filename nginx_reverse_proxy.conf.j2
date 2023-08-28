@@ -1,0 +1,8 @@
+server {
+    listen {{ item.nginx_port }};
+    {% for location in item.locations %}
+    location {{ location.path }} {
+        proxy_pass {{ location.proxy_pass_url }};
+    }
+    {% endfor %}
+}
