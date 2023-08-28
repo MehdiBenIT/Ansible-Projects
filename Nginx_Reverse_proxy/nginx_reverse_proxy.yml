@@ -40,7 +40,7 @@
         - name: Enable Nginx reverse proxy site
           file:
             src: "/etc/nginx/sites-available/{{ item.name }}"
-            dest: "/etc/nginx/sites_enables/{{ item.name }}"
+            dest: "/etc/nginx/sites-enabled/{{ item.name }}"
             state: link
 
     - name: Reload Nginx to apply all changes
