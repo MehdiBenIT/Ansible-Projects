@@ -6,7 +6,6 @@
     - vars/credentials.yml  
   roles:
     - os_prepare.yml
-    - mysql_setup.yml
 
   tasks:
-    
+      
