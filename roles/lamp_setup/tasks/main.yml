@@ -52,3 +52,8 @@
     path: /var/www/html/index.html
     state: absent
   notify: Reload apache
+
+- name: Add an apache configuration file
+  template:
+    src: ../templates/apache.conf.j2
+    dest: /etc/nginx/sites-available/{{project_name}}
