@@ -3,9 +3,7 @@
   hosts: galera_bdd_nodes
   become: yes
   vars_files:
-    - 
-    
-  
+    - vars/credentials.yml  
   roles:
     - os_prepare.yml
     - mysql_setup.yml
