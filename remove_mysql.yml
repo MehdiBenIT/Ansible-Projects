@@ -1,6 +1,6 @@
 ---
 - name: remove and uninstall mysql
-  hosts: nextcloud1, nextcloud2
+  hosts: bdd
   vars:
     packages:
       - mysql-server
@@ -14,18 +14,18 @@
 
     - name: remove mysql directory
       file: 
-        state: absent
         path: "/var/lib/mysql"
+        state: absent
     
     - name: remove mysql directory
       file: 
-        state: absent
         path: "/etc/mysql"
+        state: absent
 
     - name: remove cnf file
       file:
-        state: absent
         path: "/root/.my.cnf"
+        state: absent
 
     - name: reboot system
       reboot:
