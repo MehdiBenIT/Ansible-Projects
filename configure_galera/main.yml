@@ -5,6 +5,11 @@
   vars_files:
     - vars/credentials.yml
     - vars.yml
+  vars:
+    - cluster_name: "galera_cluster"
+    - bind_address: "0.0.0.0"
+    - wsrep_cluster_address: "192.168.1.1,192.168.1.2,192.168.1.3"
+    - sst_method: "rsync"
   roles:
     - os_prepare.yml
 
