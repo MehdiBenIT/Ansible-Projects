@@ -3,7 +3,8 @@
   hosts: galera_db_nodes
   become: yes
   vars_files:
-    - vars/credentials.yml  
+    - vars/credentials.yml
+    - vars.yml
   roles:
     - os_prepare.yml
 
