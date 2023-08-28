@@ -1,6 +1,10 @@
 ---
 - name: create and configure a galera cluster
-  hosts: bdd
+  hosts: galera_bdd_nodes
+  become: yes
+  vars_files:
+    - 
+    
   
   roles:
     - os_prepare.yml
