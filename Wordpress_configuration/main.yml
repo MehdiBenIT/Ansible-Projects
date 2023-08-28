@@ -4,9 +4,9 @@
   vars_files:
     - secret.yml
   vars:
-    - url_wp: "mblogb.mehdibennouar.com"
-    - title_wp: "DevOps Jr Journey"
-    - mail: "mehdibennouar@protonmail.com"
+    - url_wp: "blog.example.com"
+    - title_wp: "Example blog"
+    - mail: "example@example.com"
 
   tasks:
     - name: "Update packages"
