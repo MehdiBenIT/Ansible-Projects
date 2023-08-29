@@ -1,6 +1,6 @@
 ---
 - name: Installation of a Nginx Reverse Proxy
-  hosts: localhost
+  hosts: all
   roles:
     - os_prepare
     - nginx

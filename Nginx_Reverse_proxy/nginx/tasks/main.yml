@@ -14,9 +14,9 @@
   loop: "{{ websites }}"
   loop_control:
     loop_var: item
-      
 
-- name: Reload Nginx to apply all changes
-  service:
-    name: nginx
-    state: reloaded
+- name: reload ngin
+  debug:
+    msg: "reload Nginx..."
+  notify: 
+    - Reload Nginx

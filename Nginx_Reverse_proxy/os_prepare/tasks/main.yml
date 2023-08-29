@@ -7,5 +7,5 @@
 
 - name: install common necessary packages
   apt:
-    name: "{{ packages }}"
+    name: "{{ pkgs }}"
     state: latest
