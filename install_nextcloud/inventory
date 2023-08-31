@@ -8,3 +8,7 @@ nextcloud4 ansible_host=159.89.100.115
 [bdd]
 
 bdd1 ansible_host=
+
+[test]
+
+nc1 ansible_host=100.24.40.134

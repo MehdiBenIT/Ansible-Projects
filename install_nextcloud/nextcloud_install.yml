@@ -1,10 +1,10 @@
 ---
 - name: Install and configure nextcloud server
-  hosts: nextcloud4
-  vars_files:
-    - secret.yml
+  hosts: localhost
   vars:
     ip: "{{ ansible_facts['default_ipv4']['address'] }}"
+    mysql_root_passwd: tnyvch10
+    mysql_passwd: tnyvch10
   vars_prompt:
     - name: url_nextcloud
       prompt: "domain of nextcloud instance"
