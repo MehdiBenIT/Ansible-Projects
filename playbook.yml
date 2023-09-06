@@ -1,0 +1,4 @@
+- name: install nginx reverse proxy
+  hosts: vm_test
+  roles:
+    - nginx-rp
