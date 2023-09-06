@@ -1,23 +1,14 @@
+# nginx_reverse_proxy/templates/reverse_proxy.conf.j2
 server {
-    listen {{ item.nginx_port }};
-    server_name {{ item.server_name | default('_') }};
-    access_log /var/log/nginx/{{ item.name }}_access.log;
-    error_log /var/log/nginx/{{ item.name }}_error.log;
+    listen 80;
 
-    {% if item.ssl_enabled | default(false) %}
-    ssl_certificate {{ item.ssl_certificate }};
-    ssl_certificate_key {{ item.ssl_certificate_key }};
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers 'TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384';
-    {% endif %}
+    server_name {{ server_name }};
 
-    {% for location in item.locations %}
-    location {{ location.path }} {
-        proxy_pass {{ location.proxy_pass_url }};
+    location / {
+        proxy_pass http://{{ proxy_target }};
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
-    {% endfor %}
 }

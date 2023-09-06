@@ -1,0 +1,7 @@
+---
+# tasks file for nginx-rp
+- name: Import update role
+  import_role:
+    name: "update"
+  vars:
+    packages: "nginx"
