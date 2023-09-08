@@ -1,0 +1,31 @@
+---
+ - name: installation of a simple nginx webserver
+   hosts: localhost
+   tasks:
+    - name: update of packages
+       apt:
+         upgrade: yes
+         update_cache: yes
+         cache_valid_time: 86400
+
+    - name: installation of packages
+      apt:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - nginx
+        - curl
+        - wget
+        - php
+
+    - name: enable nginx 
+      service:
+        name: nginx
+        state: started
+
+    - name: enable nginx 
+      service:
+        name: nginx
+        state: enabled
+
+
